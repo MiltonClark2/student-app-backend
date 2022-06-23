@@ -1,16 +1,25 @@
 const express = require('express');
-
 const controller = express.Router();
 
 const studentData = require('../studentData.json');
 
 controller.get('/', (request, response) => {
-    response.json(studentData);
+
+    let {limit=25, min, max} = request.query;
+
+    limit = Number(limit);
+
+    let studentDataForDelivery = {...studentData};
+
+    studentDataForDelivery.students = studentDataForDelivery.students.slice(0, limit);
+
+    response.json(studentDataForDelivery);
 });
+
 
 controller.get('/:id', (request, response) => {
    try {
-    
+        
     const studentId = request.params.id
 
     if(!/[0-9]/.test(studentId)){
@@ -28,12 +37,9 @@ controller.get('/:id', (request, response) => {
     } else {
         response.send('Student not found');
     }
-}
-    catch(err){
+} catch(err){
         response.status(500).send("An error occurred");
     }
-
-    
 });
 
 

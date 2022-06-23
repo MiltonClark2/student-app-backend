@@ -5,12 +5,21 @@
 
 function repeatNTimesWithSpace(string, n){
     if(!string) return '';
-    return (string + ' ').repeat(n);
+
+    const arr = new Array(n).fill(string);
+
+    return arr.join(' ');
 };
 
+let ans = repeatNTimesWithSpace("abc", 3);
+console.log(ans)
+
+// library => Library
 function capitalizeFirstLetter(string){
+    if(!string) return '';
+
     return string[0].toUppercase() + string.slice(1);
-}
+};
 
 
-module.exports = repeatNTimesWithSpace;
+module.exports = {repeatNTimesWithSpace, capitalizeFirstLetter};
